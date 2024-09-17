@@ -1,0 +1,9 @@
+https://www.keysight.com/jp/ja/support/82357B/usb-gpib-interface-high-speed-usb-2-0.html#drivers
+
+"Keysight Instrument Control Bundle Download" から
+ダウンロードする「IO Libraries Suite」に含まれる「VISA.NETライブラリ」がSDKとなる
+※ダウンロードファイルは100MB超過のためGitHubで管理ができないのでGitでは管理していない
+　必要な場合は適宣ダウンロードすること
+
+VISA.NETライブラリの使用方法は
+C#で簡単測定器制御_VISA.NETの使用方法.pdf を参照のこと
