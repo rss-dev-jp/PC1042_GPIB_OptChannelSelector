@@ -4,6 +4,7 @@ using Ivi.Visa;
 using RssDev.Project_Code.Defines;
 using RssDev.RuntimeLog;
 using System;
+using System.Threading;
 
 namespace RssDev.Project_Code.GpibComms
 {
@@ -126,14 +127,36 @@ namespace RssDev.Project_Code.GpibComms
 				}
 
 				// 受信処理開始
+#if NoComms
+
+				Thread.Sleep(100);
+
+				// CSEL:CHAN?
+				if (_sendCommand == CommandDefine.Instance.GetCommandCheckStatus())
+				{
+					return "1";
+				}
+				// *IDN?
+				else if (_sendCommand == CommandDefine.Instance.GetCommandCheckModel())
+				{
+					return "OPTHUB,XXXXXXX,Ver.YY";
+				}
+				// 戻り値がある入力コマンド
+				else
+				{
+					return "Return value for Input command";
+				}
+
+#else				
 				try
 				{
 					return _session.FormattedIO.ReadLine();
 				}
-				catch (Ivi.Visa.IOTimeoutException ex)
+				catch (Ivi.Visa.IOTimeoutException)
 				{
 					throw new TimeoutException("Timeout発生");
 				}
+#endif
 
 			}
 
