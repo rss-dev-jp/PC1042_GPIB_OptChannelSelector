@@ -17,9 +17,9 @@ namespace RssDev.Project_Code.IniFiles
 		{
 
 			/// <summary>
-			/// GBIB通信
+			/// GPIB通信
 			/// </summary>
-			public const string GBIB = nameof(GBIB);
+			public const string GPIB = nameof(GPIB);
 
 		}
 
@@ -57,7 +57,7 @@ namespace RssDev.Project_Code.IniFiles
 			if (ini.Exists())
 			{
 
-				ini.SetSection(SECTIONS.GBIB);
+				ini.SetSection(SECTIONS.GPIB);
 				ProgramDefine.Instance.VisaAddress = ini.GetValue(nameof(ProgramDefine.Instance.VisaAddress), ProgramDefine.Instance.VisaAddress);
 				ProgramDefine.Instance.ReadTimeout = ini.GetValue(nameof(ProgramDefine.Instance.ReadTimeout), ProgramDefine.Instance.ReadTimeout);
 				ProgramDefine.Instance.Channel = ini.GetValue(nameof(ProgramDefine.Instance.Channel), ProgramDefine.Instance.Channel);
@@ -76,7 +76,7 @@ namespace RssDev.Project_Code.IniFiles
 
 			var ini = new IniStream(INI_FILE_NAME);
 
-			ini.SetSection(SECTIONS.GBIB);
+			ini.SetSection(SECTIONS.GPIB);
 			ini.SetValue(nameof(ProgramDefine.Instance.VisaAddress), ProgramDefine.Instance.VisaAddress);
 			ini.SetValue(nameof(ProgramDefine.Instance.ReadTimeout), ProgramDefine.Instance.ReadTimeout);
 			ini.SetValue(nameof(ProgramDefine.Instance.Channel), ProgramDefine.Instance.Channel);

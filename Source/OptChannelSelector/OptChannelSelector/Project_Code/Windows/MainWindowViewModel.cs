@@ -2,7 +2,7 @@
 using RssDev.Common.ModelUtility;
 using RssDev.Project_Code.Defines;
 using RssDev.Project_Code.Defines.Enums;
-using RssDev.Project_Code.GbibComms;
+using RssDev.Project_Code.GpibComms;
 using RssDev.Project_Code.Tasks;
 using System;
 using System.Collections.ObjectModel;
@@ -18,14 +18,14 @@ namespace RssDev.Project_Code.Windows
 	{
 
 		/// <summary>
-		/// GBIB通信Task
+		/// GPIB通信Task
 		/// </summary>
-		private readonly GbibCommsTask _gbibCommsTask;
+		private readonly GpibCommsTask _gpibCommsTask;
 
 		/// <summary>
-		/// GBIB通信ログデータ
+		/// GPIB通信ログデータ
 		/// </summary>
-		private readonly GbibCommsLogData _logData = new GbibCommsLogData();
+		private readonly GpibCommsLogData _logData = new GpibCommsLogData();
 
 		/// <summary>
 		/// コンストラクタ
@@ -33,7 +33,7 @@ namespace RssDev.Project_Code.Windows
 		public MainWindowViewModel()
 		{
 
-			_gbibCommsTask = new GbibCommsTask(AddGbibCommsLog);
+			_gpibCommsTask = new GpibCommsTask(AddGpibCommsLog);
 
 			var channels = new ObservableCollection<int>();
 			for (var iLoop = ProgramDefine.CHANNEL_MIN; iLoop <= ProgramDefine.CHANNEL_MAX; iLoop++)
@@ -45,7 +45,7 @@ namespace RssDev.Project_Code.Windows
 		}
 
 		/// <summary>
-		/// GBIB接続開始
+		/// GPIB接続開始
 		/// </summary>
 		public void Connect()
 		{
@@ -56,17 +56,17 @@ namespace RssDev.Project_Code.Windows
 				return;
 			}
 
-			_gbibCommsTask.StartTask();
+			_gpibCommsTask.StartTask();
 			OnPropertyChanged(nameof(IsConnect));
 
 		}
 
 		/// <summary>
-		/// GBIB接続終了
+		/// GPIB接続終了
 		/// </summary>
 		public void Disconnect()
 		{
-			_gbibCommsTask.StopTask();
+			_gpibCommsTask.StopTask();
 			OnPropertyChanged(nameof(IsConnect));
 		}
 
@@ -124,21 +124,21 @@ namespace RssDev.Project_Code.Windows
 			OnPropertyChanged(nameof(IsSending));
 
 			// コマンド送信処理開始
-			_gbibCommsTask.AddSendCommand(command);
+			_gpibCommsTask.AddSendCommand(command);
 
 		}
 
 		/// <summary>
-		/// GBIB通信ログ追加
+		/// GPIB通信ログ追加
 		/// </summary>
 		/// <param name="dateTime">通信日時</param>
 		/// <param name="direction">送受信方向</param>
 		/// <param name="message">送受信メッセージ</param>
-		public void AddGbibCommsLog(DateTime dateTime, GbibCommsDirections direction, string message)
+		public void AddGpibCommsLog(DateTime dateTime, GpibCommsDirections direction, string message)
 		{
 
 			// 受信データまたはエラーデータの場合はコマンド送信処理終了
-			if (direction != GbibCommsDirections.Tx)
+			if (direction != GpibCommsDirections.Tx)
 			{
 				IsSending = false;
 				OnPropertyChanged(nameof(IsSending));
@@ -172,7 +172,7 @@ namespace RssDev.Project_Code.Windows
 		/// </summary>
 		public void Shutdown()
 		{
-			_gbibCommsTask.Dispose();
+			_gpibCommsTask.Dispose();
 		}
 
 		/****************************************************************************************/
@@ -197,9 +197,9 @@ namespace RssDev.Project_Code.Windows
 		}
 
 		/// <summary>
-		/// GBIB接続フラグ
+		/// GPIB接続フラグ
 		/// </summary>
-		public bool IsConnect { get { return _gbibCommsTask.IsOpen; } }
+		public bool IsConnect { get { return _gpibCommsTask.IsOpen; } }
 
 		/// <summary>
 		/// チャンネル一覧

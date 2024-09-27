@@ -5,25 +5,25 @@ using RssDev.Project_Code.Defines;
 using RssDev.RuntimeLog;
 using System;
 
-namespace RssDev.Project_Code.GbibComms
+namespace RssDev.Project_Code.GpibComms
 {
 
 	/// <summary>
-	/// GBIB通信管理
+	/// GPIB通信管理
 	/// </summary>
-	public class GbibManager
+	public class GpibManager
 	{
 
 #if NoComms
 
 		/// <summary>
-		/// GBIB通信機器
+		/// GPIB通信機器
 		/// 接続フラグ
 		/// </summary>
 		private bool _isOpen = false;
 
 		/// <summary>
-		/// GBIB通信機器
+		/// GPIB通信機器
 		/// 接続フラグ
 		/// </summary>
 		public bool IsOpen { get { return _isOpen; } }
@@ -36,7 +36,7 @@ namespace RssDev.Project_Code.GbibComms
 #else
 
 		/// <summary>
-		/// GBIB通信機器
+		/// GPIB通信機器
 		/// 接続フラグ
 		/// </summary>
 		public bool IsOpen { get { return _session != null; } }
@@ -66,7 +66,7 @@ namespace RssDev.Project_Code.GbibComms
 #else
 				_session = (IMessageBasedSession)GlobalResourceManager.Open(address);
 #endif
-				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GBIB接続開始：{address}");
+				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB接続開始：{address}");
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace RssDev.Project_Code.GbibComms
 				_session.Dispose();
 				_session = null;
 #endif
-				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GBIB切断");
+				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB切断");
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace RssDev.Project_Code.GbibComms
 				_session.FormattedIO.DiscardBuffers();  // 送受信バッファクリア
 				_session.FormattedIO.WriteLine(command);
 #endif
-				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GBIBコマンド送信：{command}");
+				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIBコマンド送信：{command}");
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace RssDev.Project_Code.GbibComms
 
 			}
 
-			RuntimeLogger.Instance.Add(RuntimeLogger.Type.EXCEPTION, $"GBIB未接続時に{nameof(Read)}()メソッドを実行");
+			RuntimeLogger.Instance.Add(RuntimeLogger.Type.EXCEPTION, $"GPIB未接続時に{nameof(Read)}()メソッドを実行");
 			return string.Empty;
 
 		}

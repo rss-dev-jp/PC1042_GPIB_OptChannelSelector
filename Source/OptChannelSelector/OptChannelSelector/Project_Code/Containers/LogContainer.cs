@@ -16,9 +16,9 @@ namespace RssDev.Project_Code.Containers
 		public DateTime CommsDateTime { get; }
 
 		/// <summary>
-		/// GBIB通信方向
+		/// GPIB通信方向
 		/// </summary>
-		public GbibCommsDirections Direction { get; }
+		public GpibCommsDirections Direction { get; }
 
 		/// <summary>
 		/// 送受信メッセージ
@@ -29,9 +29,9 @@ namespace RssDev.Project_Code.Containers
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="commsDateTime">通信日時</param>
-		/// <param name="direction">GBIB通信方向</param>
+		/// <param name="direction">GPIB通信方向</param>
 		/// <param name="message">送受信メッセージ</param>
-		public LogContainer(DateTime commsDateTime, GbibCommsDirections direction, string message)
+		public LogContainer(DateTime commsDateTime, GpibCommsDirections direction, string message)
 		{
 			CommsDateTime = commsDateTime;
 			Direction = direction;

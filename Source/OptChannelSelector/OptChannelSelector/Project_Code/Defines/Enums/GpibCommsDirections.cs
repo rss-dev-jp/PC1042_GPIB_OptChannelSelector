@@ -2,9 +2,9 @@
 {
 
 	/// <summary>
-	/// GBIB通信方向
+	/// GPIB通信方向
 	/// </summary>
-	public enum GbibCommsDirections
+	public enum GpibCommsDirections
 	{
 
 		/// <summary>

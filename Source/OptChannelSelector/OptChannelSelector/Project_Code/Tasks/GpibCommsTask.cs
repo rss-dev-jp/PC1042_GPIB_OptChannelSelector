@@ -3,7 +3,7 @@ using RssDev.Common.TaskUtility;
 using RssDev.Project_Code.Containers;
 using RssDev.Project_Code.Defines;
 using RssDev.Project_Code.Defines.Enums;
-using RssDev.Project_Code.GbibComms;
+using RssDev.Project_Code.GpibComms;
 using RssDev.Project_Code.Tasks.Events;
 using RssDev.RuntimeLog;
 using System;
@@ -16,16 +16,16 @@ namespace RssDev.Project_Code.Tasks
 {
 
 	/// <summary>
-	/// GBIB通信Task
+	/// GPIB通信Task
 	/// </summary>
-	public class GbibCommsTask : ATask, IDisposable
+	public class GpibCommsTask : ATask, IDisposable
 	{
 
 		/// <summary>
-		/// GBIB通信機器
+		/// GPIB通信機器
 		/// 接続フラグ
 		/// </summary>
-		public bool IsOpen { get { return _gbibManager.IsOpen; } }
+		public bool IsOpen { get { return _gpibManager.IsOpen; } }
 
 		/// <summary>
 		/// 送信コマンド管理イベント
@@ -43,17 +43,17 @@ namespace RssDev.Project_Code.Tasks
 		private readonly UpdatePropertyTask _updatePropertyTask;
 
 		/// <summary>
-		/// GBIB通信管理
+		/// GPIB通信管理
 		/// </summary>
-		private readonly GbibManager _gbibManager = new GbibManager();
+		private readonly GpibManager _gpibManager = new GpibManager();
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="addGbibCommsLogMethod">GBIB通信ログ追加メソッド</param>
-		public GbibCommsTask(UpdatePropertyTask.AddGbibCommsLogDelegate addGbibCommsLogMethod)
+		/// <param name="addGpibCommsLogMethod">GPIB通信ログ追加メソッド</param>
+		public GpibCommsTask(UpdatePropertyTask.AddGpibCommsLogDelegate addGpibCommsLogMethod)
 		{
-			_updatePropertyTask = new UpdatePropertyTask(addGbibCommsLogMethod, _sendEvent);
+			_updatePropertyTask = new UpdatePropertyTask(addGpibCommsLogMethod, _sendEvent);
 		}
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace RssDev.Project_Code.Tasks
 		/// <returns>クラス名</returns>
 		protected override string GetClassName()
 		{
-			return nameof(GbibCommsTask);
+			return nameof(GpibCommsTask);
 		}
 
 		/// <summary>
@@ -92,14 +92,14 @@ namespace RssDev.Project_Code.Tasks
 				// コマンド送信完了 => シリアル通信切断
 				if (!isProcess)
 				{
-					_gbibManager.Close();
+					_gpibManager.Close();
 				}
 
 				DoEventWrapper.DoEvents();
 
 				if (stopwatch.ElapsedMilliseconds > ProgramDefine.CLOSE_DISCONNECT_INTERVAL)
 				{
-					var message = $"GBIB通信が一定時間内で終了しませんでした";
+					var message = $"GPIB通信が一定時間内で終了しませんでした";
 					RuntimeLogger.Instance.Add(RuntimeLogger.Type.EXCEPTION, message);
 					MessageBoxEx.Show(message, MessageBoxButton.OK);
 					break;
@@ -120,8 +120,8 @@ namespace RssDev.Project_Code.Tasks
 				return;
 			}
 
-			// GBIB通信接続
-			_gbibManager.Open(ProgramDefine.Instance.VisaAddress);
+			// GPIB通信接続
+			_gpibManager.Open(ProgramDefine.Instance.VisaAddress);
 
 			if (IsOpen)
 			{
@@ -176,18 +176,18 @@ namespace RssDev.Project_Code.Tasks
 					{
 
 						// コマンド送信
-						_gbibManager.Write(command);
-						_sendEvent.Set(new LogContainer(DateTime.Now, GbibCommsDirections.Tx, command));
+						_gpibManager.Write(command);
+						_sendEvent.Set(new LogContainer(DateTime.Now, GpibCommsDirections.Tx, command));
 
 						// 戻り値受信
 						try
 						{
-							var value = _gbibManager.Read(ProgramDefine.Instance.ReadTimeout);
-							_sendEvent.Set(new LogContainer(DateTime.Now, GbibCommsDirections.Rx, value));
+							var value = _gpibManager.Read(ProgramDefine.Instance.ReadTimeout);
+							_sendEvent.Set(new LogContainer(DateTime.Now, GpibCommsDirections.Rx, value));
 						}
 						catch (TimeoutException)
 						{
-							_sendEvent.Set(new LogContainer(DateTime.Now, GbibCommsDirections.Er, "Read Timeout."));
+							_sendEvent.Set(new LogContainer(DateTime.Now, GpibCommsDirections.Er, "Read Timeout."));
 						}
 
 					}
