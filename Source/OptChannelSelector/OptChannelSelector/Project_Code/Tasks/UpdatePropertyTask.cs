@@ -18,17 +18,17 @@ namespace RssDev.Project_Code.Tasks
 	{
 
 		/// <summary>
-		/// GBIB通信ログ追加デリゲート
+		/// GPIB通信ログ追加デリゲート
 		/// </summary>
 		/// <param name="dateTime">通信日時</param>
 		/// <param name="direction">送受信方向</param>
 		/// <param name="message">送受信メッセージ</param>
-		public delegate void AddGbibCommsLogDelegate(DateTime dateTime, GbibCommsDirections direction, string message);
+		public delegate void AddGpibCommsLogDelegate(DateTime dateTime, GpibCommsDirections direction, string message);
 
 		/// <summary>
-		/// GBIB通信ログ追加メソッド
+		/// GPIB通信ログ追加メソッド
 		/// </summary>
-		private readonly AddGbibCommsLogDelegate _addSerialCommsLogMethod;
+		private readonly AddGpibCommsLogDelegate _addSerialCommsLogMethod;
 
 		/// <summary>
 		/// イベント管理
@@ -38,11 +38,11 @@ namespace RssDev.Project_Code.Tasks
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="addGbibCommsLogMethod">GBIB通信ログ追加メソッド</param>
+		/// <param name="addGpibCommsLogMethod">GPIB通信ログ追加メソッド</param>
 		/// <param name="recvEvent"></param>
-		public UpdatePropertyTask(AddGbibCommsLogDelegate addGbibCommsLogMethod, TaskEventEx recvEvent)
+		public UpdatePropertyTask(AddGpibCommsLogDelegate addGpibCommsLogMethod, TaskEventEx recvEvent)
 		{
-			_addSerialCommsLogMethod = addGbibCommsLogMethod;
+			_addSerialCommsLogMethod = addGpibCommsLogMethod;
 			_recvEvent = recvEvent;
 		}
 
@@ -111,7 +111,7 @@ namespace RssDev.Project_Code.Tasks
 				catch (Exception ex)
 				{
 					RuntimeLogger.Instance.Add(RuntimeLogger.Type.EXCEPTION, $"{GetClassName()}.{MethodBase.GetCurrentMethod().Name}() {ex.Message}");
-					_addSerialCommsLogMethod.Invoke(DateTime.Now, GbibCommsDirections.Er, ex.Message);
+					_addSerialCommsLogMethod.Invoke(DateTime.Now, GpibCommsDirections.Er, ex.Message);
 				}
 
 			}

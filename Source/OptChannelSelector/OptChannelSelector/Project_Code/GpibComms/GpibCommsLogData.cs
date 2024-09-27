@@ -2,13 +2,13 @@
 using RssDev.Project_Code.Defines.Enums;
 using System;
 
-namespace RssDev.Project_Code.GbibComms
+namespace RssDev.Project_Code.GpibComms
 {
 
 	/// <summary>
-	/// GBIB通信ログデータ
+	/// GPIB通信ログデータ
 	/// </summary>
-	public class GbibCommsLogData
+	public class GpibCommsLogData
 	{
 
 		/// <summary>
@@ -35,13 +35,13 @@ namespace RssDev.Project_Code.GbibComms
 		/// ログ追加
 		/// </summary>
 		/// <param name="dateTime">通信日時</param>
-		/// <param name="direction">GBIB通信方向</param>
+		/// <param name="direction">GPIB通信方向</param>
 		/// <param name="data">送受信データ</param>
 		/// <returns>
 		/// true:ログを追加した
 		/// false:ログを追加していない
 		/// </returns>
-		public bool AddLog(DateTime dateTime, GbibCommsDirections direction, string data)
+		public bool AddLog(DateTime dateTime, GpibCommsDirections direction, string data)
 		{
 
 			if (!ProgramDefine.Instance.IsOutputLog)
@@ -66,12 +66,12 @@ namespace RssDev.Project_Code.GbibComms
 		}
 
 		/// <summary>
-		/// GBIB通信ログに表示する行データを取得
+		/// GPIB通信ログに表示する行データを取得
 		/// </summary>
-		/// <param name="direction">GBIB通信方向</param>
+		/// <param name="direction">GPIB通信方向</param>
 		/// <param name="data">送受信データ</param>
 		/// <returns>行データ</returns>
-		private string GetLogLine(DateTime dateTime, GbibCommsDirections direction, string data)
+		private string GetLogLine(DateTime dateTime, GpibCommsDirections direction, string data)
 		{
 
 			if (!data.Contains(Environment.NewLine))

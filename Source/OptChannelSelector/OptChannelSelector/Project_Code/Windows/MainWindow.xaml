@@ -87,10 +87,13 @@
 					</Button.Style>
 				</Button>
 			</StackPanel>
+			<!-- 実機テストによる結果、プログラム側でタイムアウトを計測する処理は不可のため削除
+				 ※Ivi.Visa側にタイムアウトを設定する方法不明のため、そちらに流用することも不可
 			<StackPanel Orientation="Horizontal" Margin="0,3,0,0" >
 				<TextBlock Text="タイムアウト(ms)" />
 				<TextBox Text="{Binding ReadTimeout}" MinWidth="60" />
 			</StackPanel>
+			-->
 		</StackPanel>
 
 		<GroupBox Grid.Row="1" Header="コマンド送信" Margin="0,3,0,2" >
