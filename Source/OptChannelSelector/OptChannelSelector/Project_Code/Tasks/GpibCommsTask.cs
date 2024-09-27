@@ -132,7 +132,7 @@ namespace RssDev.Project_Code.Tasks
 			{
 				var message = $"{ProgramDefine.Instance.VisaAddress}への接続に失敗しました";
 				RuntimeLogger.Instance.Add(RuntimeLogger.Type.EXCEPTION, message);
-				MessageBoxEx.Show(message, "シリアル通信", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBoxEx.Show(message, "GPIB通信", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 
 		}

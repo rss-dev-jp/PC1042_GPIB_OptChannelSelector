@@ -60,15 +60,19 @@ namespace RssDev.Project_Code.GpibComms
 		/// <param name="address">VISAアドレス</param>
 		public void Open(string address)
 		{
-			if (!IsOpen)
+			try
 			{
+				if (!IsOpen)
+				{
 #if NoComms
-				_isOpen = true;
+					_isOpen = true;
 #else
-				_session = (IMessageBasedSession)GlobalResourceManager.Open(address);
+					_session = (IMessageBasedSession)GlobalResourceManager.Open(address);
 #endif
-				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB接続開始：{address}");
+					RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB接続開始：{address}");
+				}
 			}
+			catch { }
 		}
 
 		/// <summary>
@@ -78,13 +82,17 @@ namespace RssDev.Project_Code.GpibComms
 		{
 			if (IsOpen)
 			{
+				try
+				{
 #if NoComms
-				_isOpen = false;
+					_isOpen = false;
 #else
-				_session.Dispose();
-				_session = null;
+					_session.Dispose();
+					_session = null;
 #endif
-				RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB切断");
+					RuntimeLogger.Instance.Add(RuntimeLogger.Type.COMMENT, $"GPIB切断");
+				}
+				catch { }
 			}
 		}
 
